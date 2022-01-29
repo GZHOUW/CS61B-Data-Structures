@@ -21,6 +21,7 @@ private:
 
     BSTNode<K, V>* root;
     int size;
+    V searchResult;
 
     // recursive function for insert
     BSTNode<K, V>* put(BSTNode<K, V>* node, K key, V val) {
@@ -41,6 +42,7 @@ private:
             return false;
         }
         if (key == node->key) {
+            searchResult = node->val;
             return true;
         }
         else if (key < node->key) {
@@ -49,7 +51,8 @@ private:
         else if (key > node->key) {
             node->right = put(node->right, key);
         }
-        return node;
+        
+        return true;
     }
 
 public:
@@ -72,7 +75,14 @@ public:
     /* Returns the value to which the specified key is mapped, or null if this
      * map contains no mapping for the key. Should run on average constant time
      * when called on a HashMap.*/
-    V get(K key);
+    V* get(K key) {
+        if (!contains(key)) {
+            return nullptr;
+        }
+        else {
+            return &searchResult;
+        }
+    }
 
     /* Returns the number of key-value mappings in this map. */
     int getSize() {
@@ -85,10 +95,4 @@ public:
         size++;
         root = put(root, key, val);
     }
-
-
 };
-
-int main() {
-
-}
